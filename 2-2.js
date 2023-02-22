@@ -60,7 +60,7 @@ const basket = [
 indexGoods = []
 
 for (let i = 1; i <= Object.keys(goods).length; i++) {
-    goodsIndex.push(goods[i])
+    indexGoods.push(goods[i])
 }
 
 
@@ -74,21 +74,19 @@ function inBasket(itemId, itemSize) {
     return false
 }
         
-indexGoods[itemId].available
 
         
 
 function addToBasket(itemId, itemSize, itemAmount) {
-    if (indexGoods[itemId].available) {
+    if (goods[itemId].available) {
 
         if (inBasket(itemId, itemSize)) {
-            basket[inBasket(itemId, itemSize)].amount += itemmount
+            basket[inBasket(itemId, itemSize)].amount += itemAmount
             console.log ("Количество заказанного товара увеличенно на ", basket[inBasket(itemId, itemSize)].amount)
             return 'Amount in basket is succesfully changed'
 
         } else {
             basket.push({item: itemId, size: itemSize, amount: itemAmount})
-            console.log ("Указанный товар добавлен в корзину")
             return 'Succesfully added to basket'
         }
 
@@ -99,20 +97,47 @@ function addToBasket(itemId, itemSize, itemAmount) {
 }
 
 
+
 function removeGoodBasket(goodId, goodSize) {
-   if (isAlreadyInBasket(goodId, goodSize) !== undefined) {
-    basket.splice(isAlreadyInBasket(goodId, goodSize), 1)
+   if (inBasket(goodId, goodSize) !== undefined) {
+    basket.splice(inBasket(goodId, goodSize), 1)
     console.log ("Товар: Наименование-", goods[goodId].name, "размер-", goodSize, "удален из корзины")
-   } else if (isAlreadyInBasket(goodId, goodSize) == undefined) {
+   } else {
     console.log ("Указанного товара, id=", goodId, "размер-", goodSize, "в корзине нет, состав корзины не изменился")
    }
 }
  
 
-function clearBasket(array) {
-    array.length = 0;
-    console.log ("Корзина полностью очищена")
+function clearBasket() {
+    basket.length = 0;
+    return console.log ("Корзина полностью очищена")
 }
 
 
+function checkSumm() {
+    let totalAmount = 0;
+    let totalSumm = 0;
+    for (let good of basket) {
+        if (good) {
+            totalAmount += 1;
+            totalSumm = totalSumm + (good.amount * indexGoods[good.item].price)
+        }
+    }
+    return {"Количество товара ": totalAmount, " на общую сумму ": totalSumm}
+}
+
+
+console.log(checkSumm())
+
+
+console.log(removeGoodBasket(1, 's'))
+
+console.log(checkSumm())
+
+console.log(addToBasket(1, 'xl', 1))
+console.log(addToBasket(3, 's', 2))
+console.log(checkSumm())
+
+console.log(clearBasket())
+console.log(checkSumm())
 
