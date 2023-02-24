@@ -123,7 +123,7 @@ function checkSumm() {
             totalSumm = totalSumm + (good.amount * indexGoods[good.item].price)
         }
     }
-    return {"Количество товара ": totalAmount, " на общую сумму ": totalSumm}
+    return {"totalAmount": totalAmount, "totalSumm": totalSumm}
 }
 
 
